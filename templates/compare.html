@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>The Birthday Times - Compare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=IM+Fell+English&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="compare-page">
+    <div class="compare-container">
+        <!-- Newspaper 1 -->
+        <div class="newspaper-content half-width">
+            <header class="masthead result-masthead">
+                <div class="masthead-main">THE BIRTHDAY TIMES</div>
+                <div class="masthead-sub">Edition: {{ data1.formatted_date }} | Vol. 1</div>
+            </header>
+
+            {% if data1.events %}
+            <h1 class="headline">{{ data1.events[0].text }}</h1>
+            {% else %}
+            <h1 class="headline">No Headline</h1>
+            {% endif %}
+
+            <div class="newspaper-grid single-col-override">
+                <div class="column">
+                    <h2 class="col-heading">By The Numbers</h2>
+                    <ul class="stats-list">
+                        <li><strong>Age:</strong> {{ data1.stats.age }} years</li>
+                        <li><strong>Days Alive:</strong> {{ data1.stats.days_alive }}</li>
+                        <li><strong>World Pop:</strong> {{ data1.stats.population }}</li>
+                    </ul>
+                    
+                    <h2 class="col-heading">World Events</h2>
+                    {% for e in data1.events %}
+                        <p class="event-item"><strong>{{ e.year }}</strong> — {{ e.text }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <footer class="newspaper-footer">
+                <p>Days alive: {{ data1.stats.days_alive }}</p>
+            </footer>
+        </div>
+
+        <div class="vs-badge">VS</div>
+
+        <!-- Newspaper 2 -->
+        <div class="newspaper-content half-width">
+             <header class="masthead result-masthead">
+                <div class="masthead-main">THE BIRTHDAY TIMES</div>
+                <div class="masthead-sub">Edition: {{ data2.formatted_date }} | Vol. 1</div>
+            </header>
+
+            {% if data2.events %}
+            <h1 class="headline">{{ data2.events[0].text }}</h1>
+            {% else %}
+            <h1 class="headline">No Headline</h1>
+            {% endif %}
+
+            <div class="newspaper-grid single-col-override">
+                <div class="column">
+                    <h2 class="col-heading">By The Numbers</h2>
+                    <ul class="stats-list">
+                        <li><strong>Age:</strong> {{ data2.stats.age }} years</li>
+                        <li><strong>Days Alive:</strong> {{ data2.stats.days_alive }}</li>
+                        <li><strong>World Pop:</strong> {{ data2.stats.population }}</li>
+                    </ul>
+
+                    <h2 class="col-heading">World Events</h2>
+                    {% for e in data2.events %}
+                        <p class="event-item"><strong>{{ e.year }}</strong> — {{ e.text }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <footer class="newspaper-footer">
+                <p>Days alive: {{ data2.stats.days_alive }}</p>
+            </footer>
+        </div>
+    </div>
+    
+    <div class="summary-bar">
+        {% if older == 1 %}
+            <h3>The edition from {{ data1.formatted_date }} is older by {{ days_apart }} days.</h3>
+        {% elif older == 2 %}
+            <h3>The edition from {{ data2.formatted_date }} is older by {{ days_apart }} days.</h3>
+        {% else %}
+            <h3>Both editions are from the same exact day!</h3>
+        {% endif %}
+        
+        <div class="action-bar-centered">
+            <a href="/" class="ink-button btn-link">Back to Archives</a>
+        </div>
+    </div>
+</body>
+</html>
